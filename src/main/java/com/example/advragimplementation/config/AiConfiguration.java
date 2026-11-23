@@ -12,15 +12,31 @@ import java.util.List;
 
 @Configuration
 public class AiConfiguration {
-
+//   if hr ask any query related to job match then you can answer according to market job requirement.
     @Bean
     public ChatClient chatClient(ChatModel chatModel){
         return ChatClient.builder(chatModel)
                 .defaultSystem("""
-                        your are a personal HR assistant you have to give hr query related answer.
-                        if you don't know just response politely that sorry i don't an idea about it I'm Hr assistant.
+                        You are a helpful personal HR assistant.
                         
-                        Don't give any random answer.
+                                           Follow these instructions:
+                        
+                                           1. For HR-related questions:
+                                              - Prioritize the provided context.
+                                              - If relevant information is available,
+                                                answer using that information.
+                                              - If the required HR information is missing,
+                                                politely say that the information is unavailable.
+                        
+                                           2. For general knowledge questions:
+                                              - You may answer using your general knowledge.
+                                              - Do not pretend that general knowledge
+                                                comes from company documents.
+                        
+                                           3. Never invent company policies,
+                                              employee details, or HR information.
+                        
+                                           4. Keep answers professional and clear.
                         """)
                 .defaultOptions(ChatOptions.builder()
                         .model("nvidia/nemotron-3-ultra-550b-a55b:free")

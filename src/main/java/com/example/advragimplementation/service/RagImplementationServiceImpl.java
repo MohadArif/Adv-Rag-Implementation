@@ -7,6 +7,7 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.rag.advisor.RetrievalAugmentationAdvisor;
+import org.springframework.ai.rag.generation.augmentation.ContextualQueryAugmenter;
 import org.springframework.ai.rag.preretrieval.query.transformation.RewriteQueryTransformer;
 import org.springframework.ai.rag.preretrieval.query.transformation.TranslationQueryTransformer;
 import org.springframework.ai.rag.retrieval.search.VectorStoreDocumentRetriever;
@@ -161,6 +162,13 @@ public class RagImplementationServiceImpl implements RagService {
                                         .topK(3)
                                         .build()
                         )
+                        /**
+                         *  queryAugmenter it will check the vector database if data not found then it will
+                         *  give response as per ai intelligence
+                         */
+                        .queryAugmenter(ContextualQueryAugmenter.builder()
+                                .allowEmptyContext(true)
+                                .build())
 
                         /*
                          * build():
