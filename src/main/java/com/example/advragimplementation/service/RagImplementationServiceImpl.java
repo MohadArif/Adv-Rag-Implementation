@@ -132,6 +132,10 @@ public class RagImplementationServiceImpl implements RagService {
                         .queryTransformers(
                                 RewriteQueryTransformer.builder()
                                         .chatClientBuilder(chatClient.mutate().clone())
+                                        .build(),
+                                TranslationQueryTransformer.builder()
+                                        .chatClientBuilder(chatClient.mutate().clone())
+                                        .targetLanguage("english")
                                         .build()
                         )
 
@@ -169,6 +173,7 @@ public class RagImplementationServiceImpl implements RagService {
                         .queryAugmenter(ContextualQueryAugmenter.builder()
                                 .allowEmptyContext(true)
                                 .build())
+
 
                         /*
                          * build():
